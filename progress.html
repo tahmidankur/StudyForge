@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Progress — StudyForge</title>
+  <meta name="theme-color" content="#6b5bd2" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <a href="dashboard.html" class="brand">
+      <span class="brand-mark">F</span>
+      <span>StudyForge</span>
+    </a>
+    <div class="topbar-actions">
+      <button class="icon-btn" data-export aria-label="Export data">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </button>
+      <button class="icon-btn" data-theme-toggle aria-label="Toggle dark mode"></button>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="container">
+
+      <div class="greeting fade-up">
+        <span class="eyebrow">Weekly progress</span>
+        <h1 style="margin-top: 0.5rem;">Your last seven days.</h1>
+        <p>Small steps, repeated, become real progress.</p>
+      </div>
+
+      <!-- Big productivity score -->
+      <div class="progress-hero fade-up fade-up-1">
+        <div style="position: relative; z-index: 1;">
+          <div class="progress-label">Today's productivity</div>
+          <div class="progress-score" id="progress-score">0<sup>%</sup></div>
+          <div class="progress-sublabel">Score = 5 tasks + 4 focus sessions</div>
+        </div>
+      </div>
+
+      <!-- Weekly chart -->
+      <div class="card fade-up fade-up-2" style="margin-bottom: 1.25rem;">
+        <div class="card-header">
+          <div>
+            <h2>This week</h2>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; margin-top: 0.2rem;">
+              Tasks completed + focus sessions, by day.
+            </p>
+          </div>
+        </div>
+        <div id="weekly-chart" class="weekly-bars" aria-label="Weekly activity chart"></div>
+      </div>
+
+      <!-- Stat row -->
+      <div class="progress-stat-row fade-up fade-up-3">
+        <div class="stat-card">
+          <div class="label">This week · tasks</div>
+          <div class="value" id="stat-week-tasks">0</div>
+          <div class="sublabel">Completed</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">This week · sessions</div>
+          <div class="value" id="stat-week-sessions">0</div>
+          <div class="sublabel">Focus blocks</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">All time · tasks</div>
+          <div class="value" id="stat-total-completed">0</div>
+          <div class="sublabel">Completed</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">All time · sessions</div>
+          <div class="value" id="stat-total-sessions">0</div>
+          <div class="sublabel">Focus blocks</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Primary">
+    <a href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2 7-7 7 7 2 2"/><path d="M5 10v10a1 1 0 001 1h12a1 1 0 001-1V10"/></svg>Home</a>
+    <a href="tasks.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Tasks</a>
+    <a href="timer.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Timer</a>
+    <a href="progress.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><polyline points="7 14 11 10 15 14 21 8"/></svg>Progress</a>
+    <a href="journal.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Journal</a>
+  </nav>
+
+  <script src="script.js"></script>
+</body>
+</html>
