@@ -37,14 +37,27 @@ Clone the repository:
 ```bash
 git clone https://github.com/<your-username>/StudyForge.git
 cd StudyForge
+```
 
-Open index.html in your browser.
-Or run a local server:
+Open `index.html` directly in your browser.
+
+You can also run the project using a local server:
+
+```bash
 python3 -m http.server 8000
-Then open this link in your browser:
-http://localhost:8000
+```
 
-**Project Structure**
+Then open this in your browser:
+
+```text
+http://localhost:8000
+```
+
+---
+
+## Project Structure
+
+```text
 StudyForge/
 ├── index.html
 ├── dashboard.html
@@ -56,16 +69,26 @@ StudyForge/
 ├── style.css
 ├── script.js
 └── README.md
+```
 
-What I Learned
-While building StudyForge, I practiced creating a complete web app using only HTML, CSS, and JavaScript. I learned how to organize JavaScript code by feature, save user data with localStorage, create a responsive layout, build a dark mode system, and handle time-based features such as streaks and focus sessions.
-Future Improvements
-Add recurring tasks
-Add custom Pomodoro settings
-Add a calendar view
-Add data import for JSON backups
-Add optional cloud sync
-License
+---
+
+## What I Learned
+
+While building StudyForge, I practiced creating a complete web app using only HTML, CSS, and JavaScript. I learned how to organize JavaScript code by feature, save user data with `localStorage`, create a responsive layout, build a dark mode system, and handle time-based features such as streaks and focus sessions.
+
+---
+
+## Future Improvements
+
+- Add recurring tasks
+- Add custom Pomodoro settings
+- Add a calendar view
+- Add data import for JSON backups
+- Add optional cloud sync
+
+---
+
+## License
+
 This project is licensed under the MIT License.
-
-Make sure there is a blank line before and after every heading, paragraph, list, and code block. That is what makes it display cleanly on GitHub.
