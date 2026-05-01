@@ -131,9 +131,9 @@ h3 { font-size: 1.15rem; font-weight: 600; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 1.25rem;
-  max-width: 1100px;
-  margin: 0 auto;
+  padding: 1rem 1.75rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 .brand {
   display: flex;
@@ -934,7 +934,7 @@ h3 { font-size: 1.15rem; font-weight: 600; }
 @media (min-width: 900px) {
   .page { padding: 1.5rem 0 7rem; }
   .container { padding: 0 2rem; }
-  .topbar { padding: 1.25rem 2rem; }
+  .topbar { padding: 1.25rem 2.5rem; }
   .bottom-nav {
     max-width: 720px;
     left: 50%;
