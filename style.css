@@ -147,12 +147,9 @@ h3 { font-size: 1.15rem; font-weight: 600; }
 .brand-mark {
   width: 32px; height: 32px;
   border-radius: 9px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-blue));
-  display: grid; place-items: center;
-  color: white; font-weight: 700;
   box-shadow: var(--shadow-md);
-  font-family: var(--font-body);
-  font-size: 0.95rem;
+  display: block;
+  flex-shrink: 0;
 }
 .topbar-actions { display: flex; gap: 0.5rem; align-items: center; }
 .icon-btn {
