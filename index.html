@@ -6,6 +6,11 @@
   <title>StudyForge — Turn study goals into focused action</title>
   <meta name="description" content="A modern, mobile-first productivity app for students. Manage tasks, run focus sessions, and build study consistency." />
   <meta name="theme-color" content="#6b5bd2" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="StudyForge" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="landing">
@@ -113,5 +118,10 @@
   </section>
 
   <script src="script.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js');
+    }
+  </script>
 </body>
 </html>

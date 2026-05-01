@@ -1,0 +1,40 @@
+{
+  "name": "StudyForge",
+  "short_name": "StudyForge",
+  "description": "Turn study goals into focused action",
+  "start_url": "/dashboard.html",
+  "display": "standalone",
+  "background_color": "#15131f",
+  "theme_color": "#6b5bd2",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Home",
+      "url": "/dashboard.html",
+      "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Add Task",
+      "short_name": "Tasks",
+      "url": "/tasks.html",
+      "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Focus Timer",
+      "short_name": "Timer",
+      "url": "/timer.html",
+      "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    }
+  ]
+}
