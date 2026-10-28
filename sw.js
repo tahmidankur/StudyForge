@@ -1,44 +1,56 @@
-const CACHE = 'studyforge-v1';
-const ASSETS = [
-  '/index.html',
-  '/dashboard.html',
-  '/tasks.html',
-  '/timer.html',
-  '/progress.html',
-  '/journal.html',
-  '/mood.html',
-  '/style.css',
-  '/script.js',
-  '/manifest.json',
-  '/icon.svg',
+/* ============================================================
+   Study Forge service worker
+   Saves the app's files on the device so it opens without internet.
+   Change CACHE_NAME (v1 -> v2) whenever you update a file,
+   so phones download the new version.
+   ============================================================ */
+
+const CACHE_NAME = 'study-forge-v1';
+
+// Paths are relative so the app also works from a sub-folder (e.g. GitHub Pages).
+const FILES = [
+  './',
+  'index.html',
+  'dashboard.html',
+  'reflect.html',
+  'style.css',
+  'script.js',
+  'icon.svg',
+  'manifest.json',
+  'icons/icon-192.png',
+  'icons/icon-512.png',
+  'icons/apple-touch-icon.png',
 ];
 
-self.addEventListener('install', (e) => {
-  e.waitUntil(
-    caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting())
-  );
+// 1. Install: save all the files.
+self.addEventListener('install', (event) => {
+  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(FILES)));
+  self.skipWaiting();
 });
 
-self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))
-    ).then(() => self.clients.claim())
+// 2. Activate: delete caches from older versions.
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then(names => Promise.all(
+      names.filter(name => name !== CACHE_NAME).map(name => caches.delete(name))
+    ))
   );
+  self.clients.claim();
 });
 
-self.addEventListener('fetch', (e) => {
-  if (e.request.method !== 'GET') return;
-  e.respondWith(
-    caches.match(e.request).then((cached) => {
-      const network = fetch(e.request).then((res) => {
-        if (res && res.status === 200 && res.type === 'basic') {
-          const clone = res.clone();
-          caches.open(CACHE).then((c) => c.put(e.request, clone));
-        }
-        return res;
-      });
-      return cached || network;
-    })
+// 3. Fetch: try the internet first so you always get the newest version,
+//    and fall back to the saved copy when you're offline.
+self.addEventListener('fetch', (event) => {
+  // Only handle our own files (not Google Fonts or other websites).
+  if (event.request.method !== 'GET' || !event.request.url.startsWith(self.location.origin)) return;
+
+  event.respondWith(
+    fetch(event.request)
+      .then(response => {
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+        return response;
+      })
+      .catch(() => caches.match(event.request, { ignoreSearch: true }))
   );
 });

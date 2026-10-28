@@ -1,94 +1,86 @@
-# StudyForge
+# Study Forge
 
-StudyForge is a simple productivity web app designed to help students stay organized, focused, and consistent with their study goals.
+Study Forge is a simple study app for students. Write down your tasks, focus with a Pomodoro timer, see your progress, and reflect on your day.
 
-The app allows users to manage study tasks, use a Pomodoro focus timer, track weekly progress, check in with their mood, and write daily reflections. All data is saved locally in the browser using `localStorage`, so no information is sent to a server.
+It is built with plain HTML, CSS and JavaScript. No frameworks, no build step, no account. Everything is saved in your browser with `localStorage`.
 
 ---
 
 ## Features
 
-- Add, complete, filter, and delete study tasks
-- Use a Pomodoro timer for focus sessions and breaks
-- Track completed tasks and focus sessions
-- View weekly progress and productivity score
-- Check in with your mood and receive a short motivational message
-- Write and save daily journal reflections
-- Switch between light mode and dark mode
-- Export saved data as a JSON backup file
+- **Tasks**: add tasks with a course, priority and due date, tick them off, filter by To do / Done
+- **Focus timer**: 25 minutes of focus, 5 minute break, with a progress ring and a chime
+- **Progress**: daily goal, study streak, and a chart of the last 7 days
+- **Mood check-in**: pick how you feel and get a matching tip
+- **Journal**: write about your day; it saves as you type and keeps past entries
+- **Dark mode**: switch with the moon/sun button
+- **Works like a phone app**: install it on your home screen and use it offline
 
 ---
 
-## Technologies Used
+## How to run
 
-- HTML5
-- CSS3
-- Vanilla JavaScript
-- localStorage
-- Web Audio API
-- Google Fonts
+1. Download or clone the project:
 
----
+   ```bash
+   git clone https://github.com/tahmidankur/StudyForge.git
+   ```
 
-## How to Run
+2. Open `index.html` in your browser. That's it!
 
-Clone the repository:
-
-```bash
-git clone https://github.com/<your-username>/StudyForge.git
-cd StudyForge
-```
-
-Open `index.html` directly in your browser.
-
-You can also run the project using a local server:
+To try the installable app and offline mode, run a small local server instead (service workers don't run on `file://` pages):
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Then open this in your browser:
+Then open http://localhost:8000.
 
-```text
-http://localhost:8000
-```
+### Install it on your phone
+
+Host the folder somewhere with `https` (GitHub Pages works: Settings → Pages → deploy from `main`). Then:
+
+- **iPhone (Safari):** Share → Add to Home Screen
+- **Android (Chrome):** menu → Install app
+- **Desktop (Chrome/Edge):** click the install icon in the address bar
 
 ---
 
-## Project Structure
+## Project structure
 
 ```text
 StudyForge/
-├── index.html
-├── dashboard.html
-├── tasks.html
-├── timer.html
-├── mood.html
-├── progress.html
-├── journal.html
-├── style.css
-├── script.js
+├── index.html      Landing page
+├── dashboard.html  Tasks, focus timer and progress
+├── reflect.html    Mood check-in and journal
+├── style.css       All the styles (colors are at the top)
+├── script.js       All the JavaScript, split into numbered sections
+├── icon.svg        The logo
+├── icons/          PNG versions of the logo for phones
+├── manifest.json   App name, colors and icons (lets you install it)
+├── sw.js           Service worker: saves the files so the app works offline
 └── README.md
 ```
 
 ---
 
-## What I Learned
+## How the code works
 
-While building StudyForge, I practiced creating a complete web app using only HTML, CSS, and JavaScript. I learned how to organize JavaScript code by feature, save user data with `localStorage`, create a responsive layout, build a dark mode system, and handle time-based features such as streaks and focus sessions.
+- **One CSS file.** The colors live at the top of `style.css` as CSS variables like `--tomato`. Dark mode just swaps those variables.
+- **One JavaScript file.** Every page loads `script.js`. Each feature has a `setup...()` function that first checks whether its HTML is on the page, so the same file works everywhere.
+- **Saving data.** `load(key, fallback)` and `save(key, value)` wrap `localStorage`. Daily counts are stored by date, like `{ "2026-10-27": 3 }`, which makes the weekly chart easy to build.
 
----
+- **Offline.** `sw.js` saves every file in the browser's cache. When you change a file, bump `CACHE_NAME` in `sw.js` (v1 → v2) so installed apps pick up the update.
 
-## Future Improvements
+### Ideas to try next
 
-- Add recurring tasks
-- Add custom Pomodoro settings
-- Add a calendar view
-- Add data import for JSON backups
-- Add optional cloud sync
+- Let the user change the timer length
+- Add an "edit task" button
+- Add a button that clears all data
+- Show a calendar of past journal entries
 
 ---
 
 ## License
 
-This project is licensed under the MIT License.
+MIT
