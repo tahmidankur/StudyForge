@@ -203,8 +203,6 @@ img, svg { display: block; }
 }
 .btn-secondary:hover { background: var(--surface-2); }
 
-.btn-small { padding: 6px 12px; font-size: 0.85rem; }
-
 label {
   display: block;
   font-size: 0.85rem;
