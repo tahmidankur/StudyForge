@@ -1,85 +1,43 @@
 # Study Forge
 
-Study Forge is a simple study app for students. Write down your tasks, focus with a Pomodoro timer, see your progress, and reflect on your day.
+A study planner that runs in the browser: a task list, a Pomodoro timer, a progress view, and a short daily reflection.
 
-It is built with plain HTML, CSS and JavaScript. No frameworks, no build step, no account. Everything is saved in your browser with `localStorage`.
-
----
+Live: https://study-forge-ecru.vercel.app
 
 ## Features
 
-- **Tasks**: add tasks with a course, priority and due date, tick them off, filter by To do / Done
-- **Focus timer**: 25 minutes of focus, 5 minute break, with a progress ring and a chime
-- **Progress**: daily goal, study streak, and a chart of the last 7 days
-- **Mood check-in**: pick how you feel and get a matching tip
-- **Journal**: write about your day; it saves as you type and keeps past entries
-- **Dark mode**: switch with the moon/sun button
-- **Works like a phone app**: install it on your home screen and use it offline
+- Tasks with course, priority and due date, filterable by to do / done
+- 25/5 focus timer with a progress ring and a chime at the end
+- Daily goal, study streak and a 7-day chart
+- Mood check-in with a tip for each mood
+- Journal that autosaves and keeps past days
+- Dark mode
+- Installable and works offline (PWA)
 
----
+No framework, no build step, no account. Data is saved in `localStorage`.
 
-## How to run
+## Running it
 
-1. Download or clone the project:
-
-   ```bash
-   git clone https://github.com/tahmidankur/StudyForge.git
-   ```
-
-2. Open `index.html` in your browser. That's it!
-
-To try the installable app and offline mode, run a small local server instead (service workers don't run on `file://` pages):
+Opening `index.html` directly works, but the service worker needs http:
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Then open http://localhost:8000.
+## Layout
 
-### Install it on your phone
+- `index.html` - landing page
+- `dashboard.html` - tasks, timer, progress
+- `reflect.html` - mood and journal
+- `script.js` - all the JS; each `setup...()` function returns early if its part of the page isn't there, so every page can load the same file
+- `style.css` - colours are CSS variables at the top, dark mode swaps them
+- `sw.js` - caches the app for offline use. Bump `CACHE_NAME` when files change.
 
-Host the folder somewhere with `https` (GitHub Pages works: Settings → Pages → deploy from `main`). Then:
+## To do
 
-- **iPhone (Safari):** Share → Add to Home Screen
-- **Android (Chrome):** menu → Install app
-- **Desktop (Chrome/Edge):** click the install icon in the address bar
-
----
-
-## Project structure
-
-```text
-StudyForge/
-├── index.html      Landing page
-├── dashboard.html  Tasks, focus timer and progress
-├── reflect.html    Mood check-in and journal
-├── style.css       All the styles (colors are at the top)
-├── script.js       All the JavaScript, split into numbered sections
-├── icon.svg        The logo
-├── icons/          PNG versions of the logo for phones
-├── manifest.json   App name, colors and icons (lets you install it)
-├── sw.js           Service worker: saves the files so the app works offline
-└── README.md
-```
-
----
-
-## How the code works
-
-- **One CSS file.** The colors live at the top of `style.css` as CSS variables like `--tomato`. Dark mode just swaps those variables.
-- **One JavaScript file.** Every page loads `script.js`. Each feature has a `setup...()` function that first checks whether its HTML is on the page, so the same file works everywhere.
-- **Saving data.** `load(key, fallback)` and `save(key, value)` wrap `localStorage`. Daily counts are stored by date, like `{ "2026-10-27": 3 }`, which makes the weekly chart easy to build.
-
-- **Offline.** `sw.js` saves every file in the browser's cache. When you change a file, bump `CACHE_NAME` in `sw.js` (v1 → v2) so installed apps pick up the update.
-
-### Ideas to try next
-
-- Let the user change the timer length
-- Add an "edit task" button
-- Add a button that clears all data
-- Show a calendar of past journal entries
-
----
+- Custom timer lengths
+- Editing tasks
+- Clear-all-data button
 
 ## License
 

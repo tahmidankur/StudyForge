@@ -1,24 +1,5 @@
-/* ============================================================
-   Study Forge script
-   1. Saving data (localStorage)
-   2. Date helpers
-   3. Dark mode
-   4. Streak
-   5. Tasks
-   6. Focus timer
-   7. Progress
-   8. Mood
-   9. Journal
-   10. Start the page
+/* ---------- Saving data ---------- */
 
-   Every page loads this same file. Each "setup" function checks
-   whether its part of the page exists before doing anything.
-   ============================================================ */
-
-
-/* ---------- 1. Saving data ---------- */
-
-// The names we use in localStorage. Each one holds a different piece of data.
 const KEYS = {
   TASKS: 'ff_tasks',                 // list of task objects
   FOCUS_HISTORY: 'ff_focus_history', // focus sessions per day: { '2026-10-27': 3 }
@@ -29,7 +10,6 @@ const KEYS = {
   THEME: 'ff_theme',                 // 'light' or 'dark'
 };
 
-// Read a saved value. If nothing is saved yet, return the fallback.
 function load(key, fallback) {
   try {
     const saved = localStorage.getItem(key);
@@ -39,12 +19,11 @@ function load(key, fallback) {
   }
 }
 
-// Save a value. JSON.stringify turns objects and arrays into text.
 function save(key, value) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch {
-    // Storage can be full or blocked (e.g. private mode). The app still works, it just won't remember.
+    // storage full or blocked (private mode), app still works without saving
   }
 }
 
@@ -61,9 +40,9 @@ function todayCount(key) {
 }
 
 
-/* ---------- 2. Date helpers ---------- */
+/* ---------- Date helpers ---------- */
 
-// Turn a date into text like '2026-10-27'. We use this as a key for daily data.
+// '2026-10-27' style key for daily data
 function dateKey(date = new Date()) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -71,14 +50,12 @@ function dateKey(date = new Date()) {
   return `${year}-${month}-${day}`;
 }
 
-// Get the date that was `n` days ago.
 function daysAgo(n) {
   const date = new Date();
   date.setDate(date.getDate() - n);
   return date;
 }
 
-// Turn '2026-10-27' back into a Date object.
 function parseDateKey(key) {
   const [year, month, day] = key.split('-').map(Number);
   return new Date(year, month - 1, day);
@@ -94,9 +71,9 @@ function showTodayDate() {
 }
 
 
-/* ---------- 3. Dark mode ---------- */
+/* ---------- Dark mode ---------- */
 
-// This runs right away (not after the page loads) so the page never flashes the wrong theme.
+// set before load so the page doesn't flash the wrong theme
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 document.documentElement.dataset.theme = load(KEYS.THEME, prefersDark ? 'dark' : 'light');
 
@@ -112,7 +89,7 @@ function setupThemeButton() {
 }
 
 
-/* ---------- 4. Streak ---------- */
+/* ---------- Streak ---------- */
 // A day counts toward your streak when you finish a task or a focus session.
 
 function markTodayActive() {
@@ -134,7 +111,7 @@ function getStreak() {
 }
 
 
-/* ---------- 5. Tasks ---------- */
+/* ---------- Tasks ---------- */
 
 let taskFilter = 'all';
 
@@ -181,7 +158,7 @@ function deleteTask(id) {
   save(KEYS.TASKS, getTasks().filter(t => t.id !== id));
 }
 
-// Escape text before putting it in HTML, so a task like "<b>hi</b>" shows as plain text.
+// task titles are user text, so escape before using innerHTML
 function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text;
@@ -275,7 +252,7 @@ function setupTasks() {
 }
 
 
-/* ---------- 6. Focus timer ---------- */
+/* ---------- Focus timer ---------- */
 
 const TIMER_MINUTES = { focus: 25, break: 5 };
 
@@ -301,13 +278,11 @@ function renderTimer() {
     running ? (timer.mode === 'focus' ? 'Focusing…' : 'On a break') : 'Ready';
   document.getElementById('timer-card').classList.toggle('break-mode', timer.mode === 'break');
 
-  // Shrink the ring as time runs out.
   const ring = document.getElementById('timer-ring');
   const circumference = 2 * Math.PI * 90; // 90 is the circle's radius in the HTML
   ring.style.strokeDasharray = circumference;
   ring.style.strokeDashoffset = circumference * (1 - timer.secondsLeft / totalSeconds);
 
-  // Show the time in the browser tab while the timer runs.
   document.title = running ? `${formatTime(timer.secondsLeft)} · Study Forge` : 'Study · Study Forge';
 }
 
@@ -391,7 +366,7 @@ function setupTimer() {
 }
 
 
-/* ---------- 7. Progress ---------- */
+/* ---------- Progress ---------- */
 
 const DAILY_GOAL = { tasks: 3, focus: 4 };
 
@@ -445,7 +420,7 @@ function showGreeting() {
 }
 
 
-/* ---------- 8. Mood ---------- */
+/* ---------- Mood ---------- */
 
 const MOOD_TIPS = {
   Motivated: 'Use that energy! Pick your hardest task and start a focus session now.',
@@ -480,7 +455,7 @@ function setupMood() {
 }
 
 
-/* ---------- 9. Journal ---------- */
+/* ---------- Journal ---------- */
 
 function renderPastEntries() {
   const entries = load(KEYS.JOURNAL, {});
@@ -524,7 +499,7 @@ function setupJournal() {
 }
 
 
-/* ---------- 10. Start the page ---------- */
+/* ---------- Start the page ---------- */
 
 function showToast(message) {
   let toast = document.getElementById('toast');
@@ -541,13 +516,11 @@ function showToast(message) {
   showToast.timeout = setTimeout(() => toast.classList.remove('visible'), 2500);
 }
 
-// Register the service worker (sw.js) so the app can be installed and works offline.
-// Service workers only run on http(s), not when you open the file directly.
+// service workers only run on http(s), not file://
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
   navigator.serviceWorker.register('sw.js');
 }
 
-// Wait until the HTML has loaded, then set up whatever this page has.
 document.addEventListener('DOMContentLoaded', () => {
   setupThemeButton();
   showTodayDate();
